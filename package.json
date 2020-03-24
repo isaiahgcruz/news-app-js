@@ -1,13 +1,19 @@
 {
+  "private": true,
   "name": "news-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client:dev": "yarn workspace client start",
+    "server:dev": "yarn workspace server dev",
+    "dev": "concurrently -n=server,client --kill-others-on-fail \"yarn server:dev\"  \"yarn client:dev\""
   },
   "author": "",
   "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -15,5 +21,8 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^3.1.2",
     "prettier": "^2.0.2"
+  },
+  "dependencies": {
+    "concurrently": "^5.1.0"
   }
 }
