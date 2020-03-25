@@ -1,6 +1,13 @@
+const api = require('../utils/api');
+
 const getSources = async () => {
-  // some logic here
-  return [];
+  try {
+    const { data } = await api.get('/sources');
+
+    return data;
+  } catch (e) {
+    throw new Error(e);
+  }
 };
 
 const getArticles = async () => {
