@@ -3,6 +3,7 @@ const sourceService = require('../services/source');
 
 jest.mock('../services/source', () => ({
   getSources: jest.fn(),
+  getSourceById: jest.fn(),
 }));
 
 const mockResponse = {
@@ -38,10 +39,34 @@ describe('index', () => {
 });
 
 describe('show', () => {
-  const mockRequest = {};
-  it('success', async () => {
-    await sourceController.show(mockRequest, mockResponse);
+  const showMockRequest = {
+    params: {
+      id: 'abc-news',
+    },
+    query: {
+      page: 1,
+      pageSize: 3,
+    },
+  };
 
-    expect(mockResponse.send).toHaveBeenCalledWith([]);
+  it('success', async () => {
+    const source = { id: 1, articles: [] };
+    sourceService.getSourceById.mockImplementation(() => source);
+    await sourceController.show(showMockRequest, mockResponse);
+
+    expect(mockResponse.send).toHaveBeenCalledWith(source);
+  });
+
+  it('error', async () => {
+    sourceService.getSourceById.mockImplementation(() =>
+      Promise.reject(new Error('error')),
+    );
+
+    await sourceController.show(showMockRequest, mockResponse);
+
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      status: 500,
+      message: 'error',
+    });
   });
 });

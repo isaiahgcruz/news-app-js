@@ -13,7 +13,19 @@ const index = async (req, res) => {
 };
 
 const show = async (req, res) => {
-  res.send([]);
+  try {
+    const { id } = req.params;
+    const { page, pageSize } = req.query;
+
+    const data = await sourceService.getSourceById(id, page, pageSize);
+
+    res.send(data);
+  } catch (e) {
+    res.status(500).json({
+      status: 500,
+      message: e.message,
+    });
+  }
 };
 
 module.exports = {

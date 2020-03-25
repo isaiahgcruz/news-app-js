@@ -5,6 +5,10 @@ jest.mock('../utils/api', () => ({
   get: jest.fn(),
 }));
 
+jest.mock('uuid', () => ({
+  v4: jest.fn().mockImplementation(() => 42),
+}));
+
 describe('getSources', () => {
   it('success', async () => {
     const sources = [1, 2, 3, 4, 5];
@@ -22,9 +26,26 @@ describe('getSources', () => {
   });
 });
 
-describe('getArticles', () => {
+describe('getSourceById', () => {
   it('success', async () => {
-    const data = await sourceService.getArticles(1);
-    expect(data).toEqual([]);
+    api.get.mockImplementation((_, { params }) =>
+      Promise.resolve({ data: { ...params, articles: [{ name: 'test' }] } }),
+    );
+
+    const data = await sourceService.getSourceById(1, 2, 3);
+
+    expect(data).toEqual({
+      id: 1,
+      sources: 1,
+      page: 2,
+      pageSize: 3,
+      articles: [{ id: 42, name: 'test' }],
+    });
+  });
+
+  it('error', async () => {
+    api.get.mockImplementation(() => Promise.reject(new Error('error')));
+
+    expect(sourceService.getSourceById(1, 2, 3)).rejects.toThrow('error');
   });
 });
