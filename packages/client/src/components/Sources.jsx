@@ -6,11 +6,7 @@ import {
   ListItemText,
   makeStyles,
 } from '@material-ui/core';
-
-const mockData = Array.from({ length: 100 }, (_, index) => ({
-  id: index,
-  name: `News Source ${index + 1}`,
-}));
+import useNewsContext from '../contexts/NewsContext/useNewsContext';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -27,6 +23,12 @@ const Sources = () => {
   const classes = useStyles();
   const [selected, setSelected] = useState({});
 
+  const {
+    state: {
+      sources: { data, isFetching },
+    },
+  } = useNewsContext();
+
   const handleClickItem = (item) => {
     setSelected(item);
   };
@@ -41,16 +43,20 @@ const Sources = () => {
     >
       <div className={classes.toolbar} />
       <List>
-        {mockData.map((item) => (
-          <ListItem
-            selected={selected.id === item.id}
-            onClick={() => handleClickItem(item)}
-            key={item.id}
-            button
-          >
-            <ListItemText primary={item.name} />
-          </ListItem>
-        ))}
+        {isFetching ? (
+          <div>Loading</div>
+        ) : (
+          data.map((item) => (
+            <ListItem
+              selected={selected.id === item.id}
+              onClick={() => handleClickItem(item)}
+              key={item.id}
+              button
+            >
+              <ListItemText primary={item.name} />
+            </ListItem>
+          ))
+        )}
       </List>
     </Drawer>
   );

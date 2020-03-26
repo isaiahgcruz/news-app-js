@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import Navbar from './components/Navbar';
 import Sources from './components/Sources';
 import Articles from './components/Articles';
+import NewsProvider from './contexts/NewsContext/NewsProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,14 +16,16 @@ function App() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Navbar />
-      <Sources />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Articles />
-      </main>
-    </div>
+    <NewsProvider>
+      <div className={classes.root}>
+        <Navbar />
+        <Sources />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Articles />
+        </main>
+      </div>
+    </NewsProvider>
   );
 }
 
