@@ -10,6 +10,8 @@ const useStyles = makeStyles({
   },
 });
 
+const loadingArray = Array.from({ length: 10 }, (_, index) => index);
+
 const Articles = () => {
   const classes = useStyles();
 
@@ -27,21 +29,18 @@ const Articles = () => {
       flexWrap="wrap"
       p={1}
       m={1}
-      disabled={isFetching}
     >
-      {isFetching ? (
-        <div>Loading</div>
-      ) : (
-        data.map(({ id, image, title, date, description }) => (
-          <ArticleItem
-            key={id}
-            image={image}
-            title={title}
-            date={date}
-            description={description}
-          />
-        ))
-      )}
+      {isFetching
+        ? loadingArray.map((val) => <ArticleItem key={val} isSkeleton />)
+        : data.map(({ id, image, title, date, description }) => (
+            <ArticleItem
+              key={id}
+              image={image}
+              title={title}
+              date={date}
+              description={description}
+            />
+          ))}
     </Box>
   );
 };
