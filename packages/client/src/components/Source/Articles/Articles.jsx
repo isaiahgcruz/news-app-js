@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { Box, makeStyles, Divider, Toolbar } from '@material-ui/core';
+import {
+  Box,
+  makeStyles,
+  Divider,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import ArticleItem from './ArticleItem';
 import Pagination from '../../Pagination';
 import useNewsContext from '../../../contexts/NewsContext/useNewsContext';
@@ -39,6 +45,34 @@ const Articles = () => {
     }
   }, [isFetching]);
 
+  const content = (() => {
+    if (!id) {
+      return <Typography variant="h6">Please select a news source</Typography>;
+    }
+    if (id && !data.length && !isFetching) {
+      return (
+        <Typography variant="h6">
+          No article is available for this news source
+        </Typography>
+      );
+    }
+    if (isFetching) {
+      return loadingArray.map((val) => <ArticleItem key={val} isSkeleton />);
+    }
+
+    return data.map(
+      ({ id: itemId, urlToImage, title, publishedAt, description }) => (
+        <ArticleItem
+          key={itemId}
+          image={urlToImage}
+          title={title || ''}
+          date={publishedAt}
+          description={description || ''}
+        />
+      ),
+    );
+  })();
+
   return (
     <>
       <Toolbar id="back-to-top" className={classes.toolbar} />
@@ -50,19 +84,7 @@ const Articles = () => {
         p={1}
         m={1}
       >
-        {isFetching
-          ? loadingArray.map((val) => <ArticleItem key={val} isSkeleton />)
-          : data.map(
-              ({ id: itemId, urlToImage, title, publishedAt, description }) => (
-                <ArticleItem
-                  key={itemId}
-                  image={urlToImage}
-                  title={title}
-                  date={publishedAt}
-                  description={description}
-                />
-              ),
-            )}
+        {content}
       </Box>
       {(!!data.length || isFetching) && (
         <>
