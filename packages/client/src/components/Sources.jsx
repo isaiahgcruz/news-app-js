@@ -26,11 +26,16 @@ const Sources = () => {
   const {
     state: {
       sources: { data, isFetching },
+      source: { isFetching: isFetchingSource },
     },
+    actions: { fetchSource },
   } = useNewsContext();
 
   const handleClickItem = (item) => {
-    setSelected(item);
+    if (item.id !== selected.id) {
+      setSelected(item);
+      fetchSource(item.id);
+    }
   };
 
   return (
@@ -48,6 +53,7 @@ const Sources = () => {
         ) : (
           data.map((item) => (
             <ListItem
+              disabled={isFetchingSource}
               selected={selected.id === item.id}
               onClick={() => handleClickItem(item)}
               key={item.id}

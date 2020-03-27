@@ -32,6 +32,37 @@ const reducer = (state, action) => {
           isFetching: false,
         },
       };
+    case 'FETCH_SOURCE':
+      return {
+        ...state,
+        source: {
+          ...state.source,
+          error: null,
+          id: action.payload.id,
+          page: action.payload.page,
+          isFetching: true,
+        },
+      };
+    case 'FETCH_SOURCE_FULFILLED':
+      return {
+        ...state,
+        source: {
+          ...state.source,
+          error: null,
+          data: action.payload,
+          isFetching: false,
+        },
+      };
+    case 'FETCH_SOURCE_REJECTED':
+      return {
+        ...state,
+        source: {
+          ...state.source,
+          error: action.payload.error,
+          data: [],
+          isFetching: false,
+        },
+      };
     default:
       return state;
   }

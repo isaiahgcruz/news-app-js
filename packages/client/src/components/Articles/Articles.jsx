@@ -1,20 +1,7 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import ArticleItem from './ArticleItem';
-
-const NOW = new Date().toISOString().slice(0, -5).replace(/T/, ' ');
-
-const mockData = Array.from({ length: 10 }, (_, index) => ({
-  id: index,
-  title: `Article ${index + 1}`,
-  date: NOW,
-  image:
-    index % 2 === 0
-      ? 'https://techcrunch.com/wp-content/uploads/2019/04/bitcoin-bitfinex.jpg?w=750'
-      : null,
-  description:
-    'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eaque odit a aut similique placeat perspiciatis adipisci ducimus distinctio, pariatur quos suscipit, numquam sed animi expedita in accusamus ad beatae dolor.',
-}));
+import useNewsContext from '../../contexts/NewsContext/useNewsContext';
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +13,12 @@ const useStyles = makeStyles({
 const Articles = () => {
   const classes = useStyles();
 
+  const {
+    state: {
+      source: { data, isFetching },
+    },
+  } = useNewsContext();
+
   return (
     <Box
       className={classes.root}
@@ -34,16 +27,21 @@ const Articles = () => {
       flexWrap="wrap"
       p={1}
       m={1}
+      disabled={isFetching}
     >
-      {mockData.map(({ id, image, title, date, description }) => (
-        <ArticleItem
-          key={id}
-          image={image}
-          title={title}
-          date={date}
-          description={description}
-        />
-      ))}
+      {isFetching ? (
+        <div>Loading</div>
+      ) : (
+        data.map(({ id, image, title, date, description }) => (
+          <ArticleItem
+            key={id}
+            image={image}
+            title={title}
+            date={date}
+            description={description}
+          />
+        ))
+      )}
     </Box>
   );
 };
