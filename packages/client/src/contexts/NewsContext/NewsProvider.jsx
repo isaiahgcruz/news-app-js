@@ -41,6 +41,7 @@ const NewsProvider = ({ children }) => {
       try {
         const params = {
           pageSize: 10,
+          page,
         };
         const { data } = await api.get(`/sources/${id}`, { params });
 
