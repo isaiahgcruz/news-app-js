@@ -52,15 +52,17 @@ const Articles = () => {
       >
         {isFetching
           ? loadingArray.map((val) => <ArticleItem key={val} isSkeleton />)
-          : data.map(({ id: itemId, urlToImage, title, date, description }) => (
-              <ArticleItem
-                key={itemId}
-                image={urlToImage}
-                title={title}
-                date={date}
-                description={description}
-              />
-            ))}
+          : data.map(
+              ({ id: itemId, urlToImage, title, publishedAt, description }) => (
+                <ArticleItem
+                  key={itemId}
+                  image={urlToImage}
+                  title={title}
+                  date={publishedAt}
+                  description={description}
+                />
+              ),
+            )}
       </Box>
       {(!!data.length || isFetching) && (
         <>

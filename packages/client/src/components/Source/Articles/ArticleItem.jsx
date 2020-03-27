@@ -26,6 +26,7 @@ const defaultProps = {
 };
 
 const descriptionHeight = 125;
+const titleHeight = 70;
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -37,6 +38,18 @@ const useStyles = makeStyles(() => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  title: {
+    height: titleHeight,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  titleText: {
+    height: titleHeight / 2,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
   description: {
     height: descriptionHeight,
@@ -70,11 +83,24 @@ const ArticleItem = ({ isSkeleton, image, title, date, description }) => {
         <>
           <CardMedia
             className={classes.media}
-            image={image || 'https://via.placeholder.com/300?text=No Image'}
+            image={
+              (image !== 'null' && image) ||
+              'https://via.placeholder.com/300?text=No Image'
+            }
           />
-          <CardContent>
-            <Typography variant="h6">{title}</Typography>
-            <Typography variant="caption" component="p">
+          <CardContent className={classes.title}>
+            <Typography
+              title={title}
+              className={classes.titleText}
+              variant="h6"
+            >
+              {title}
+            </Typography>
+            <Typography
+              className={classes.titleText}
+              variant="caption"
+              component="p"
+            >
               {date}
             </Typography>
           </CardContent>
@@ -83,6 +109,7 @@ const ArticleItem = ({ isSkeleton, image, title, date, description }) => {
               className={classes.descriptionText}
               variant="body2"
               component="p"
+              title={description}
             >
               {description}
             </Typography>
