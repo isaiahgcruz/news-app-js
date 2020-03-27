@@ -7,7 +7,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
-import useNewsContext from '../contexts/NewsContext/useNewsContext';
+import useNewsContext from '../../contexts/NewsContext/useNewsContext';
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 const loadingArray = Array.from({ length: 10 }, (_, index) => index);
 
-const Sources = () => {
+const SourceList = () => {
   const classes = useStyles();
   const [selected, setSelected] = useState({});
 
@@ -77,4 +77,4 @@ const Sources = () => {
   );
 };
 
-export default Sources;
+export default SourceList;

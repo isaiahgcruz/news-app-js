@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import ArticleItem from './ArticleItem';
-import useNewsContext from '../../contexts/NewsContext/useNewsContext';
+import useNewsContext from '../../../contexts/NewsContext/useNewsContext';
 
 const useStyles = makeStyles({
   root: {
