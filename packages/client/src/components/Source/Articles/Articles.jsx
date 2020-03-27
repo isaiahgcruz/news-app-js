@@ -1,11 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  Box,
-  makeStyles,
-  Divider,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
+import { Box, makeStyles, Divider, Toolbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import ArticleItem from './ArticleItem';
 import Pagination from '../../Pagination';
 import useNewsContext from '../../../contexts/NewsContext/useNewsContext';
@@ -28,7 +23,7 @@ const Articles = () => {
 
   const {
     state: {
-      source: { data, isFetching, page, pageSize = 10, length = 25, id },
+      source: { error, data, isFetching, page, pageSize = 10, length = 25, id },
     },
     actions: { fetchSource },
   } = useNewsContext();
@@ -46,14 +41,22 @@ const Articles = () => {
   }, [isFetching]);
 
   const content = (() => {
-    if (!id) {
-      return <Typography variant="h6">Please select a news source</Typography>;
-    }
-    if (id && !data.length && !isFetching) {
+    if (error) {
       return (
-        <Typography variant="h6">
-          No article is available for this news source
-        </Typography>
+        <Alert severity="info">
+          An error occurred. Please select another news source.
+        </Alert>
+      );
+    }
+    if (!id) {
+      return <Alert severity="info">Please select a news source</Alert>;
+    }
+    if (id && !isFetching && !data.length) {
+      return (
+        <Alert severity="info">
+          No article is available for this news source. Please select another
+          news source.
+        </Alert>
       );
     }
     if (isFetching) {

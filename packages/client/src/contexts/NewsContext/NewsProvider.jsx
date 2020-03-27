@@ -30,7 +30,10 @@ const NewsProvider = ({ children }) => {
 
       dispatch({ type: 'FETCH_SOURCES_FULFILLED', payload: data.sources });
     } catch (e) {
-      dispatch({ type: 'FETCH_SOURCES_REJECTED', payload: e.message });
+      dispatch({
+        type: 'FETCH_SOURCES_REJECTED',
+        payload: { error: e.message },
+      });
     }
   }, [dispatch]);
 
@@ -44,7 +47,6 @@ const NewsProvider = ({ children }) => {
           page,
         };
         const { data } = await api.get(`/sources/${id}`, { params });
-
         dispatch({
           type: 'FETCH_SOURCE_FULFILLED',
           payload: {
@@ -53,7 +55,10 @@ const NewsProvider = ({ children }) => {
           },
         });
       } catch (e) {
-        dispatch({ type: 'FETCH_SOURCE_REJECTED', payload: e.message });
+        dispatch({
+          type: 'FETCH_SOURCE_REJECTED',
+          payload: { error: e.message },
+        });
       }
     },
     [dispatch],
