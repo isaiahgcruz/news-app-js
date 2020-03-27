@@ -94,7 +94,7 @@ const ArticleItem = ({ isSkeleton, image, title, date, description }) => {
               className={classes.titleText}
               variant="h6"
             >
-              {title}
+              {title.slice(0, 50)}
             </Typography>
             <Typography
               className={classes.titleText}
@@ -111,7 +111,7 @@ const ArticleItem = ({ isSkeleton, image, title, date, description }) => {
               component="p"
               title={description}
             >
-              {description}
+              {description.slice(0, 1000)}
             </Typography>
           </CardContent>
         </>
