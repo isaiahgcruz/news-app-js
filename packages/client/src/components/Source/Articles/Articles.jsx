@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, makeStyles, Divider } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Box, makeStyles, Divider, Toolbar } from '@material-ui/core';
 import ArticleItem from './ArticleItem';
 import Pagination from '../../Pagination';
 import useNewsContext from '../../../contexts/NewsContext/useNewsContext';
@@ -8,6 +8,10 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     justifyContent: 'flex-start',
+  },
+  toolbar: {
+    maxHeight: 0,
+    minHeight: 0,
   },
 });
 
@@ -27,8 +31,17 @@ const Articles = () => {
     fetchSource(id, newPage);
   };
 
+  useEffect(() => {
+    const anchor = document.querySelector('#back-to-top');
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [isFetching]);
+
   return (
     <>
+      <Toolbar id="back-to-top" className={classes.toolbar} />
       <Box
         className={classes.root}
         display="flex"
