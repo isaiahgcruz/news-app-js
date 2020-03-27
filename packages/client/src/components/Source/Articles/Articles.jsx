@@ -22,7 +22,7 @@ const Articles = () => {
 
   const {
     state: {
-      source: { data, isFetching, page, size = 10, length = 25, id },
+      source: { data, isFetching, page, pageSize = 10, length = 25, id },
     },
     actions: { fetchSource },
   } = useNewsContext();
@@ -52,10 +52,10 @@ const Articles = () => {
       >
         {isFetching
           ? loadingArray.map((val) => <ArticleItem key={val} isSkeleton />)
-          : data.map(({ id: itemId, image, title, date, description }) => (
+          : data.map(({ id: itemId, urlToImage, title, date, description }) => (
               <ArticleItem
                 key={itemId}
-                image={image}
+                image={urlToImage}
                 title={title}
                 date={date}
                 description={description}
@@ -68,7 +68,7 @@ const Articles = () => {
           <Pagination
             disabled={isFetching}
             page={page}
-            size={size}
+            size={pageSize}
             length={length}
             onChange={handleOnChangePage}
           />

@@ -47,8 +47,8 @@ const reducer = (state, action) => {
         ...state,
         source: {
           ...state.source,
+          ...action.payload,
           error: null,
-          data: action.payload,
           isFetching: false,
         },
       };
