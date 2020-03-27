@@ -8,8 +8,7 @@ jest.mock('../services/source', () => ({
 
 const mockResponse = {
   send: jest.fn(),
-  status: jest.fn().mockImplementation(() => mockResponse),
-  json: jest.fn(),
+  status: jest.fn(),
 };
 
 describe('index', () => {
@@ -30,8 +29,8 @@ describe('index', () => {
     );
 
     await sourceController.index(mockRequest, mockResponse);
-
-    expect(mockResponse.json).toHaveBeenCalledWith({
+    expect(mockResponse.status).toHaveBeenCalledWith(500);
+    expect(mockResponse.send).toHaveBeenCalledWith({
       status: 500,
       message: 'error',
     });
@@ -64,7 +63,8 @@ describe('show', () => {
 
     await sourceController.show(showMockRequest, mockResponse);
 
-    expect(mockResponse.json).toHaveBeenCalledWith({
+    expect(mockResponse.status).toHaveBeenCalledWith(500);
+    expect(mockResponse.send).toHaveBeenCalledWith({
       status: 500,
       message: 'error',
     });

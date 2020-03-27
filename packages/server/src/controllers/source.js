@@ -5,7 +5,8 @@ const index = async (req, res) => {
     const data = await sourceService.getSources();
     res.send(data);
   } catch (e) {
-    res.status(500).json({
+    res.status(500);
+    res.send({
       status: 500,
       message: e.message,
     });
@@ -18,10 +19,10 @@ const show = async (req, res) => {
     const { page, pageSize } = req.query;
 
     const data = await sourceService.getSourceById(id, page, pageSize);
-
     res.send(data);
   } catch (e) {
-    res.status(500).json({
+    res.status(500);
+    res.send({
       status: 500,
       message: e.message,
     });
