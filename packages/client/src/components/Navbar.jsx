@@ -1,9 +1,17 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+}));
 
 const Navbar = () => {
+  const classes = useStyles();
+
   return (
-    <AppBar position="static">
+    <AppBar position="fixed" className={classes.appBar}>
       <Toolbar>
         <Typography variant="h6">News</Typography>
       </Toolbar>

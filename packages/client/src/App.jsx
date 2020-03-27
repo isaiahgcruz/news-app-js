@@ -1,14 +1,11 @@
 import React from 'react';
-import Navbar from './components/Navbar';
-import Sources from './components/Sources';
+import withNavbar from './hoc/withNavbar';
+import Source from './components/Source';
+
+const SourceWithNavbar = withNavbar(Source);
 
 function App() {
-  return (
-    <div>
-      <Navbar />
-      <Sources />
-    </div>
-  );
+  return <SourceWithNavbar />;
 }
 
 export default App;
