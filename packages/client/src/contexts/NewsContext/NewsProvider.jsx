@@ -2,11 +2,11 @@ import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { NewsContext } from './useNewsContext';
 import useNewsReducer from './useNewsReducer';
+import api from '../../utils/api';
 
 const initialState = {
   sources: {
     data: [],
-    page: 1,
     isFetching: false,
     error: null,
   },
@@ -24,20 +24,17 @@ const NOW = new Date().toISOString().slice(0, -5).replace(/T/, ' ');
 const NewsProvider = ({ children }) => {
   const [state, dispatch] = useNewsReducer(initialState);
 
-  const fetchSources = useCallback(
-    (page = 1) => {
-      dispatch({ type: 'FETCH_SOURCES', payload: page });
+  const fetchSources = useCallback(async () => {
+    dispatch({ type: 'FETCH_SOURCES' });
 
-      setTimeout(() => {
-        const sources = Array.from({ length: 100 }, (_, index) => ({
-          id: index,
-          name: `News Source ${index + 1}`,
-        }));
-        dispatch({ type: 'FETCH_SOURCES_FULFILLED', payload: sources });
-      }, 1000);
-    },
-    [dispatch],
-  );
+    try {
+      const { data } = await api.get('/sources');
+
+      dispatch({ type: 'FETCH_SOURCES_FULFILLED', payload: data.sources });
+    } catch (e) {
+      dispatch({ type: 'FETCH_SOURCES_REJECTED', payload: e.message });
+    }
+  }, [dispatch]);
 
   const fetchSource = useCallback(
     (id, page = 1) => {

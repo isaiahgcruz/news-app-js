@@ -8,7 +8,6 @@ const reducer = (state, action) => {
         sources: {
           ...state.sources,
           error: null,
-          page: action.payload,
           isFetching: true,
         },
       };
