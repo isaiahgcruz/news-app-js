@@ -16,7 +16,9 @@ const cacheMiddleware = (duration) => (req, res, next) => {
   } else {
     res.newSend = res.send;
     res.send = (body) => {
-      memoryCache.put(key, body, duration * 60 * 1000);
+      if (res.statusCode <= 299) {
+        memoryCache.put(key, body, duration * 60 * 1000);
+      }
       res.newSend(body);
     };
     next();
