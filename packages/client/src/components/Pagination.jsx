@@ -40,6 +40,7 @@ const Pagination = ({ disabled, onChange, page, size, length }) => {
         {summary}
       </Typography>
       <Button
+        data-testid="pagination-previous"
         variant="outlined"
         disabled={disabled || page === 1}
         aria-label="previous"
@@ -48,6 +49,7 @@ const Pagination = ({ disabled, onChange, page, size, length }) => {
         &#8249;
       </Button>
       <Button
+        data-testid="pagination-next"
         variant="outlined"
         disabled={disabled || page * size >= length}
         aria-label="next"

@@ -49,9 +49,10 @@ docker-compose up --build
   - Hooks
   - State Management: Combination of useContext and useReducer.
   - MaterialUI
+  - Integration Testing using `react-testing-library`
 - Docker Compose (Local)
 
-#### Why Yarn Workspace?
+#### Why Yarn Workspace
 
 Initially, I was planning on creating separate repositories for the server and client but because of docker I figured out why not use try monorepo for docker compose.
 Other than that, there are benefits such as:
@@ -70,4 +71,3 @@ React-redux is commonly used as a state management for react. But with the exist
 ## TODO
 
 - [ ] Provide demo link or at least deploy this somewhere.
-- [ ] Unit Testing on for the client side
