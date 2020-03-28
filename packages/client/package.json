@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
+    "moxios": "^0.4.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -40,5 +41,12 @@
   "devDependencies": {
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-jsx-a11y": "^6.2.3"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "./src/setupTests.js",
+      "./src/serviceWorker.js",
+      "./src/index.js"
+    ]
   }
 }

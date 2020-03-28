@@ -53,7 +53,7 @@ const SourceList = () => {
       }}
     >
       <div className={classes.toolbar} />
-      <List>
+      <List data-testid="source-list-container">
         {isFetching
           ? loadingArray.map((key) => (
               <ListItem key={key} className={classes.listItem}>

@@ -35,7 +35,7 @@ const Articles = () => {
   useEffect(() => {
     const anchor = document.querySelector('#back-to-top');
 
-    if (anchor) {
+    if (anchor && anchor.scrollIntoView) {
       anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }, [isFetching]);
@@ -80,6 +80,7 @@ const Articles = () => {
     <>
       <Toolbar id="back-to-top" className={classes.toolbar} />
       <Box
+        data-testid="articles-container"
         className={classes.root}
         display="flex"
         flexDirection="row"

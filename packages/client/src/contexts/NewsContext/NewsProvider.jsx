@@ -71,7 +71,7 @@ const NewsProvider = ({ children }) => {
           type: 'FETCH_SOURCE_FULFILLED',
           payload: {
             data: data.articles,
-            length: data.totalResults,
+            length: 20,
           },
         });
       } catch (e) {
