@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { NewsContext } from './useNewsContext';
 import useNewsReducer from './useNewsReducer';
@@ -20,7 +20,27 @@ const initialState = {
 };
 
 const NewsProvider = ({ children }) => {
-  const [state, dispatch] = useNewsReducer(initialState);
+  const [state, preDispatch] = useNewsReducer(initialState);
+  const isMounted = useRef();
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+    }
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  const dispatch = useCallback(
+    (...args) => {
+      if (isMounted.current) {
+        preDispatch(...args);
+      }
+    },
+    [preDispatch],
+  );
 
   const fetchSources = useCallback(async () => {
     dispatch({ type: 'FETCH_SOURCES' });
