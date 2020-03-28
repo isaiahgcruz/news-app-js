@@ -4,10 +4,10 @@ const cors = require('cors');
 const router = require('./router');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
-app.use('/api', router);
+app.use('/', router);
 
 app.listen(PORT, () => {
   console.log(`App is listening on PORT ${PORT}`);

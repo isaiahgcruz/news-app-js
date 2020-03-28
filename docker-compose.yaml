@@ -1,0 +1,30 @@
+version: '3'
+services:
+  nginx:
+    restart: always
+    build: ./packages/nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - server
+      - client
+
+  server:
+    restart: always
+    build: ./packages/server
+    ports:
+      - '8080:8080'
+    environment:
+      - PORT=8080
+      - NEWS_API_URL=${NEWS_API_URL}
+      - NEWS_API_KEY=${NEWS_API_KEY}
+      - GET_SOURCE_CACHE_DURATION=${GET_SOURCE_CACHE_DURATION}
+      - GET_SOURCES_CACHE_DURATION=${GET_SOURCES_CACHE_DURATION}
+
+  client:
+    restart: always
+    build: ./packages/client
+    ports:
+      - '3000:3000'
+    links:
+      - server
